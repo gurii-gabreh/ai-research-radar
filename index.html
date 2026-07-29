@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ai-research-radar｜AI技術情報・活用事例 収集ログ</title>
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card-bg: #ffffff;
+    --text: #1b1f27;
+    --text-dim: #5b6270;
+    --border: #e3e6ee;
+    --accent: #4b5bd7;
+    --accent-bg: #eef0fd;
+    --tag-bg: #eef2f6;
+    --tag-text: #3a4250;
+    --shadow: 0 1px 2px rgba(20, 24, 40, .05), 0 1px 8px rgba(20, 24, 40, .04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161c;
+      --card-bg: #1c1f28;
+      --text: #eceef3;
+      --text-dim: #9aa1b1;
+      --border: #2a2e3a;
+      --accent: #8b96f5;
+      --accent-bg: #262a45;
+      --tag-bg: #262a38;
+      --tag-text: #c2c8d6;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 10px rgba(0, 0, 0, .25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161c; --card-bg: #1c1f28; --text: #eceef3; --text-dim: #9aa1b1;
+    --border: #2a2e3a; --accent: #8b96f5; --accent-bg: #262a45; --tag-bg: #262a38; --tag-text: #c2c8d6;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 1px 10px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f7fb; --card-bg: #ffffff; --text: #1b1f27; --text-dim: #5b6270;
+    --border: #e3e6ee; --accent: #4b5bd7; --accent-bg: #eef0fd; --tag-bg: #eef2f6; --tag-text: #3a4250;
+    --shadow: 0 1px 2px rgba(20,24,40,.05), 0 1px 8px rgba(20,24,40,.04);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Hiragino Sans, "Noto Sans JP", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  header.page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: .9rem;
+    margin: 0;
+  }
+  button.icon-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .settings-panel {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0 20px;
+    box-shadow: var(--shadow);
+  }
+  .settings-panel.open { display: block; }
+  .settings-panel label {
+    display: block;
+    font-size: .85rem;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .settings-panel input[type="text"] {
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .9rem;
+  }
+  .settings-panel .row { display: flex; gap: 8px; margin-top: 10px; }
+  .settings-panel button.save {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: .85rem;
+    cursor: pointer;
+  }
+  .settings-hint {
+    font-size: .78rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0 18px;
+    flex-wrap: wrap;
+  }
+  .toolbar input[type="search"], .toolbar select {
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: .88rem;
+  }
+  .toolbar input[type="search"] { flex: 1; min-width: 160px; }
+  .status-line {
+    color: var(--text-dim);
+    font-size: .82rem;
+    margin-bottom: 14px;
+  }
+  .feed { display: flex; flex-direction: column; gap: 12px; }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .badge {
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+  .badge.ai { background: var(--accent-bg); color: var(--accent); }
+  .badge.date { color: var(--text-dim); background: transparent; padding-left: 0; }
+  .card h2 {
+    font-size: 1.02rem;
+    margin: 0 0 6px;
+  }
+  .card h2 a { color: var(--text); text-decoration: none; }
+  .card h2 a:hover { color: var(--accent); text-decoration: underline; }
+  .card p.summary {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: .92rem;
+  }
+  .card .collected-at {
+    margin-top: 10px;
+    font-size: .74rem;
+    color: var(--text-dim);
+    opacity: .8;
+  }
+  .empty, .error {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 60px 20px;
+    font-size: .92rem;
+  }
+  .error { color: #d0483e; }
+  a.plain { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <div>
+      <h1>AI技術情報・活用事例 収集ログ</h1>
+      <p class="subtitle">ai-research-radar ｜ Geminiがキーワードごとに自動調査した結果を表示</p>
+    </div>
+    <button class="icon-btn" id="settingsToggle" title="設定" aria-label="設定">⚙</button>
+  </header>
+
+  <div class="settings-panel" id="settingsPanel">
+    <label for="gasUrl">GAS Webアプリ URL(doGetのデプロイURL)</label>
+    <input type="text" id="gasUrl" placeholder="https://script.google.com/macros/s/xxxx/exec">
+    <div class="row">
+      <button class="save" id="saveGasUrl">保存して読み込む</button>
+    </div>
+    <p class="settings-hint">
+      新しいキーワードを調査してほしい場合は、実装進捗管理シートの「依頼タスク」タブに
+      Repo=<code>ai-research-radar</code> / Task=&lt;キーワード&gt; を追加してください。
+      1日1回、指定時刻にGeminiが自動調査します。
+    </p>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="searchBox" placeholder="タイトル・要約で検索">
+    <select id="categoryFilter"><option value="">すべてのカテゴリ</option></select>
+  </div>
+
+  <div class="status-line" id="statusLine">読み込み中...</div>
+  <div class="feed" id="feed"></div>
+</div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'ai-research-radar:gasUrl';
+  const $ = (sel) => document.querySelector(sel);
+  const feedEl = $('#feed');
+  const statusEl = $('#statusLine');
+  const searchBox = $('#searchBox');
+  const categoryFilter = $('#categoryFilter');
+  const settingsPanel = $('#settingsPanel');
+  const settingsToggle = $('#settingsToggle');
+  const gasUrlInput = $('#gasUrl');
+  const saveGasUrlBtn = $('#saveGasUrl');
+
+  let allItems = [];
+  let refreshTimer = null;
+
+  function getGasUrl() {
+    return localStorage.getItem(STORAGE_KEY) || '';
+  }
+
+  function setGasUrl(url) {
+    localStorage.setItem(STORAGE_KEY, url);
+  }
+
+  settingsToggle.addEventListener('click', () => {
+    settingsPanel.classList.toggle('open');
+    gasUrlInput.value = getGasUrl();
+  });
+
+  saveGasUrlBtn.addEventListener('click', () => {
+    setGasUrl(gasUrlInput.value.trim());
+    settingsPanel.classList.remove('open');
+    loadData();
+  });
+
+  function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function render() {
+    const q = searchBox.value.trim().toLowerCase();
+    const cat = categoryFilter.value;
+    const filtered = allItems.filter((it) => {
+      const matchesQ = !q ||
+        (it['タイトル'] || '').toLowerCase().includes(q) ||
+        (it['概要'] || '').toLowerCase().includes(q);
+      const matchesCat = !cat || it['カテゴリ'] === cat;
+      return matchesQ && matchesCat;
+    });
+
+    if (filtered.length === 0) {
+      feedEl.innerHTML = '<div class="empty">まだ収集結果がありません。依頼タスクにキーワードを追加すると、次回の自動調査で表示されます。</div>';
+      return;
+    }
+
+    feedEl.innerHTML = filtered.map((it) => `
+      <article class="card">
+        <div class="card-meta">
+          <span class="badge date">${escapeHtml(it['日付'])}</span>
+          ${it['カテゴリ'] ? `<span class="badge">${escapeHtml(it['カテゴリ'])}</span>` : ''}
+          <span class="badge ai">${escapeHtml(it['使うAI'] || 'Gemini')}</span>
+        </div>
+        <h2>${it['ソースURL']
+          ? `<a href="${escapeHtml(it['ソースURL'])}" target="_blank" rel="noopener">${escapeHtml(it['タイトル'])}</a>`
+          : escapeHtml(it['タイトル'])}</h2>
+        <p class="summary">${escapeHtml(it['概要'])}</p>
+        <div class="collected-at">収集: ${escapeHtml(it['収集日時'])}</div>
+      </article>
+    `).join('');
+  }
+
+  function populateCategories() {
+    const cats = Array.from(new Set(allItems.map(it => it['カテゴリ']).filter(Boolean))).sort();
+    const current = categoryFilter.value;
+    categoryFilter.innerHTML = '<option value="">すべてのカテゴリ</option>' +
+      cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+    categoryFilter.value = cats.includes(current) ? current : '';
+  }
+
+  async function loadData() {
+    const url = getGasUrl();
+    if (!url) {
+      statusEl.textContent = '⚙アイコンからGAS WebアプリのURLを設定してください';
+      feedEl.innerHTML = '';
+      return;
+    }
+    statusEl.textContent = '読み込み中...';
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      allItems = Array.isArray(data) ? data : [];
+      populateCategories();
+      render();
+      statusEl.textContent = `${allItems.length}件 ｜ 最終更新: ${new Date().toLocaleString('ja-JP')}`;
+    } catch (err) {
+      feedEl.innerHTML = `<div class="error">読み込みに失敗しました: ${escapeHtml(err.message)}</div>`;
+      statusEl.textContent = '';
+    }
+  }
+
+  searchBox.addEventListener('input', render);
+  categoryFilter.addEventListener('change', render);
+
+  loadData();
+  refreshTimer = setInterval(loadData, 5 * 60 * 1000);
+})();
+</script>
+</body>
+</html>
