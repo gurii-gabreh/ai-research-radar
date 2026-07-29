@@ -228,6 +228,7 @@
 <script>
 (function () {
   const STORAGE_KEY = 'ai-research-radar:gasUrl';
+  const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbxAzfaE-6aRxah3pvqLI23BC3fYphiR2czEO-UArqzQucKl18vVYj605VBYa7jeY0Q/exec';
   const $ = (sel) => document.querySelector(sel);
   const feedEl = $('#feed');
   const statusEl = $('#statusLine');
@@ -242,7 +243,7 @@
   let refreshTimer = null;
 
   function getGasUrl() {
-    return localStorage.getItem(STORAGE_KEY) || '';
+    return localStorage.getItem(STORAGE_KEY) || DEFAULT_GAS_URL;
   }
 
   function setGasUrl(url) {
