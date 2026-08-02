@@ -39,9 +39,22 @@ index.html (GitHub Pages) が表示
    - `TASK_SHEET_ID`: 「実装進捗管理シート」のスプレッドシートID
 4. エディタで`createDailyTrigger`を選択して一度だけ手動実行(権限の認可 + 日次トリガー作成。
    デフォルトは毎日7:00 JST。時刻を変えたい場合は`createDailyTrigger(9)`のように引数で時を指定)
-5. デプロイ → 新しいデプロイ → 種類「ウェブアプリ」→ 実行するユーザー: 自分 / アクセス: 全員 → デプロイ
-6. 発行された`/exec`で終わるURLをコピーし、`index.html`(GitHub Pages公開後のページ)を開いて
+5. エディタで`rescheduleToLeastCongestedHour`を一度手動実行(下記「実行時刻の自動最適化」参照。
+   その後`createWeeklyRescheduleTrigger`も一度だけ手動実行しておくと、以降は毎週自動で見直される)
+6. デプロイ → 新しいデプロイ → 種類「ウェブアプリ」→ 実行するユーザー: 自分 / アクセス: 全員 → デプロイ
+7. 発行された`/exec`で終わるURLをコピーし、`index.html`(GitHub Pages公開後のページ)を開いて
    右上の⚙アイコンから貼り付けて保存する
+
+## 実行時刻の自動最適化(Gemini APIの空いている時間帯を狙う)
+
+`gemini-monitor`(Gemini API通信可能時間調査アプリ)が別のスプレッドシートで、時間帯(JST)ごとの
+Gemini API成功率を継続的に計測している。`rescheduleToLeastCongestedHour()`はそのログを直接読み、
+このアプリが使うモデル(`gemini-2.5-flash`)の成功率が最も高い時間帯を集計して、日次トリガーの
+実行時刻をその時間に自動で付け替える(サンプル数が5件未満の時間帯は判断材料としては使わない)。
+
+`createWeeklyRescheduleTrigger()`を一度実行しておくと、毎週日曜3:00 JSTにこの見直しが自動で走る。
+gemini-monitor側の計測は日々蓄積されていくため、時間が経つほど精度が上がっていく想定。
+混雑データが読めなかった場合は何もせず、現在のトリガー時刻をそのまま維持する(安全側に倒す設計)。
 
 ## 依頼タスクの追加方法
 

@@ -15,6 +15,12 @@ const TASK_TAB_NAME = '依頼タスク';
 const TARGET_REPO_LABEL = 'ai-research-radar';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
+// gemini-monitor(Gemini API通信可能時間調査アプリ)が計測している、時間帯別のGemini API
+// 成功率ログ。同じGoogleアカウントが持つ別のスプレッドシートなので、SpreadsheetApp.openById
+// で直接読みに行く(GASのURL経由ではないので、ネットワーク制約の影響を受けない)。
+const CONGESTION_SHEET_ID = '1riOPPhGryYlTzYhep51kpcaOUx5uJKFPI1cYjfnbECg';
+const CONGESTION_DETAIL_GID = 1799393535;
+
 function getResultSheet_() {
   return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 }
@@ -136,6 +142,84 @@ function createDailyTrigger(hour) {
     .timeBased()
     .atHour(h)
     .everyDays(1)
+    .inTimezone('Asia/Tokyo')
+    .create();
+}
+
+/**
+ * gemini-monitorの計測ログ(CONGESTION_SHEET_ID)から、GEMINI_MODELの時間帯(JST 0〜23)別の
+ * 成功率を集計し、最も成功率が高い時間を返す。サンプル数が少なすぎる時間帯(5件未満)は
+ * ノイズが大きいため候補から除外する。シートが読めない・対象モデルの記録が無い場合はnullを返す
+ * (呼び出し側は現在のトリガー時刻を維持する)。
+ */
+function computeBestHour_() {
+  try {
+    const ss = SpreadsheetApp.openById(CONGESTION_SHEET_ID);
+    const sheet = ss.getSheets().find(s => s.getSheetId() === CONGESTION_DETAIL_GID);
+    if (!sheet) return null;
+
+    const values = sheet.getDataRange().getValues();
+    const header = values[0];
+    const colModel = header.indexOf('model');
+    const colStatus = header.indexOf('status');
+    const colHour = header.indexOf('jst_hour');
+    if ([colModel, colStatus, colHour].some(c => c < 0)) return null;
+
+    const totals = {}; // jst_hour -> {success, total}
+    for (let r = 1; r < values.length; r++) {
+      const row = values[r];
+      if (row[colModel] !== GEMINI_MODEL) continue;
+      const hour = Number(row[colHour]);
+      if (isNaN(hour)) continue;
+      if (!totals[hour]) totals[hour] = { success: 0, total: 0 };
+      totals[hour].total++;
+      if (row[colStatus] === 'success') totals[hour].success++;
+    }
+
+    let bestHour = null;
+    let bestRate = -1;
+    Object.keys(totals).forEach(h => {
+      const t = totals[h];
+      if (t.total < 5) return;
+      const rate = t.success / t.total;
+      if (rate > bestRate) {
+        bestRate = rate;
+        bestHour = Number(h);
+      }
+    });
+    return bestHour;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * gemini-monitorの計測データを見て、GEMINI_MODELの成功率が最も高い時間帯に日次トリガーを
+ * 再設定する。手動実行、または下記の週次トリガーから定期的に呼ばれる想定。データが取得できない
+ * 場合は何もしない(既存のトリガー時刻を維持する)。
+ */
+function rescheduleToLeastCongestedHour() {
+  const hour = computeBestHour_();
+  if (hour === null) {
+    return { ok: false, message: '混雑データを取得できなかったため、時刻は変更していません' };
+  }
+  createDailyTrigger(hour);
+  return { ok: true, hour: hour };
+}
+
+/**
+ * 混雑データに基づく実行時刻の見直しを週1回自動で行うトリガーを設定する
+ * (初回セットアップ時、createDailyTriggerと合わせて一度だけ手動実行してください)。
+ * gemini-monitor側の計測が日々蓄積されていくため、時間が経つほど判断材料が増えて精度が上がる。
+ */
+function createWeeklyRescheduleTrigger() {
+  ScriptApp.getProjectTriggers().forEach(t => {
+    if (t.getHandlerFunction() === 'rescheduleToLeastCongestedHour') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('rescheduleToLeastCongestedHour')
+    .timeBased()
+    .onWeekDay(ScriptApp.WeekDay.SUNDAY)
+    .atHour(3)
     .inTimezone('Asia/Tokyo')
     .create();
 }
