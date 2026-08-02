@@ -13,7 +13,7 @@
 
 const TASK_TAB_NAME = '依頼タスク';
 const TARGET_REPO_LABEL = 'ai-research-radar';
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-3.5-flash';
 
 // gemini-monitor(Gemini API通信可能時間調査アプリ)が計測している、時間帯別のGemini API
 // 成功率ログ。同じGoogleアカウントが持つ別のスプレッドシートなので、SpreadsheetApp.openById
