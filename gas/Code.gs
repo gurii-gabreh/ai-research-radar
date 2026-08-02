@@ -21,6 +21,12 @@ const GEMINI_MODEL = 'gemini-3.5-flash';
 const CONGESTION_SHEET_ID = '1riOPPhGryYlTzYhep51kpcaOUx5uJKFPI1cYjfnbECg';
 const CONGESTION_DETAIL_GID = 1799393535;
 
+// Geminiがレート制限(429)の時のフォールバック先。専用のClaude調査ルームが、
+// 依頼タスクタブの備考に「レート制限」の印が付いた行(=Geminiが処理できなかった行)を見つけて
+// 自前でWeb検索調査し、結果をこのJSONファイルへcommit・pushする想定(プル型同期。
+// progress-tracker-dashboardのsyncFromGithubと同じ構成で、GAS側からGitHubへ定期的に取りに行く)。
+const CLAUDE_RESULTS_URL = 'https://raw.githubusercontent.com/gurii-gabreh/ai-research-radar/main/data/claude-fallback-results.json';
+
 function getResultSheet_() {
   return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 }
@@ -116,6 +122,10 @@ function collectAIResearch() {
       }
     }
   }
+
+  // Geminiのレート制限で今回処理できなかった行を、Claude調査ルーム(専用ルーム)が
+  // 既に代わりに調査済みならここで反映する。ファイルが無い/読めない場合は何もしない。
+  syncClaudeResearchFromGithub_(taskSheet, colRepo, colTask, colStatus, colNote, resultSheet);
 }
 
 /**
@@ -183,15 +193,118 @@ function researchWithGemini_(keyword, apiKey) {
   return items;
 }
 
-function appendResults_(sheet, items) {
+function appendResults_(sheet, items, aiName) {
   const today = formatDate_(new Date());
   const now = formatDateTime_(new Date());
   const rows = items.map(it => [
-    today, it.category || '', it.title || '', it.summary || '', it.sourceUrl || '', now, 'Gemini'
+    today, it.category || '', it.title || '', it.summary || '', it.sourceUrl || '', now, aiName || 'Gemini'
   ]);
   if (rows.length > 0) {
     sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, 7).setValues(rows);
   }
+}
+
+/** Claudeフォールバックの反映だけを日次トリガーを待たず今すぐ試したい時に、エディタから手動実行する用 */
+function syncClaudeResearchOnly() {
+  const props = PropertiesService.getScriptProperties();
+  const taskSheetId = props.getProperty('TASK_SHEET_ID');
+  if (!taskSheetId) throw new Error('スクリプトプロパティ TASK_SHEET_ID を設定してください');
+  const taskSheet = SpreadsheetApp.openById(taskSheetId).getSheetByName(TASK_TAB_NAME);
+  if (!taskSheet) throw new Error(`タブ「${TASK_TAB_NAME}」が見つかりません`);
+  const header = taskSheet.getDataRange().getValues()[0];
+  const colRepo = header.indexOf('Repo');
+  const colTask = header.indexOf('Task');
+  const colStatus = header.indexOf('ステータス');
+  const colNote = header.indexOf('備考');
+  const resultSheet = getResultSheet_();
+  ensureResultHeader_(resultSheet);
+  return syncClaudeResearchFromGithub_(taskSheet, colRepo, colTask, colStatus, colNote, resultSheet);
+}
+
+/**
+ * Claude調査ルーム(専用ルーム)がGitHubへpushしたdata/claude-fallback-results.jsonを取りに行き、
+ * Geminiがレート制限で処理できなかったキーワードの調査結果を収集ログへ反映する。
+ * ファイルが無い/読めない場合や、対応する依頼タスク行が既に完了・スキップ済みの場合は何もしない。
+ * 同じ記事(ソースURL)を重複追記しないよう、既存の収集ログと突き合わせてから追記する。
+ */
+function syncClaudeResearchFromGithub_(taskSheet, colRepo, colTask, colStatus, colNote, resultSheet) {
+  const res = UrlFetchApp.fetch(CLAUDE_RESULTS_URL, { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) return { synced: 0 };
+  let data;
+  try {
+    data = JSON.parse(res.getContentText());
+  } catch (e) {
+    return { synced: 0 };
+  }
+  const results = (data && data.results) || [];
+  if (!results.length) return { synced: 0 };
+
+  const existing = resultSheet.getDataRange().getValues();
+  const existingHeader = existing[0] || [];
+  const colSrc = existingHeader.indexOf('ソースURL');
+  const existingUrls = new Set();
+  if (colSrc >= 0) {
+    for (let i = 1; i < existing.length; i++) {
+      if (existing[i][colSrc]) existingUrls.add(existing[i][colSrc]);
+    }
+  }
+
+  const taskValues = taskSheet.getDataRange().getValues();
+  let synced = 0;
+
+  results.forEach(entry => {
+    const keyword = entry.keyword;
+    const items = entry.items || [];
+    if (!keyword || !items.length) return;
+
+    let rowIndex = -1;
+    for (let i = 1; i < taskValues.length; i++) {
+      if (taskValues[i][colRepo] === TARGET_REPO_LABEL && taskValues[i][colTask] === keyword) {
+        rowIndex = i;
+        break;
+      }
+    }
+    if (rowIndex === -1) return; // タスク行が見つからない(手動削除等)場合はスキップ
+
+    const currentStatus = taskValues[rowIndex][colStatus];
+    if (currentStatus === '完了' || currentStatus === 'スキップ') return; // 既に決着済みなら触らない
+
+    const newItems = items.filter(it => !it.sourceUrl || !existingUrls.has(it.sourceUrl));
+    if (newItems.length) {
+      appendResults_(resultSheet, newItems, 'Claude');
+      newItems.forEach(it => { if (it.sourceUrl) existingUrls.add(it.sourceUrl); });
+    }
+
+    const repeatConfig = parseRepeatConfig_(colNote >= 0 ? taskValues[rowIndex][colNote] : '');
+    const now = formatDateTime_(new Date());
+    if (repeatConfig.mode === 'daily') {
+      if (colNote >= 0) {
+        taskSheet.getRange(rowIndex + 1, colNote + 1).setValue(
+          `【毎日】最終実施(Claudeフォールバック): ${now}(${items.length}件)`);
+      }
+    } else if (repeatConfig.mode === 'limited') {
+      const doneCount = repeatConfig.done + 1;
+      if (doneCount >= repeatConfig.limit) {
+        taskSheet.getRange(rowIndex + 1, colStatus + 1).setValue('完了');
+        if (colNote >= 0) {
+          taskSheet.getRange(rowIndex + 1, colNote + 1).setValue(
+            `【${repeatConfig.limit}回】${doneCount}/${repeatConfig.limit}回実施(Claudeフォールバック, 最終: ${now}) → 完了`);
+        }
+      } else if (colNote >= 0) {
+        taskSheet.getRange(rowIndex + 1, colNote + 1).setValue(
+          `【${repeatConfig.limit}回】${doneCount}/${repeatConfig.limit}回実施(Claudeフォールバック, 最終: ${now})`);
+      }
+    } else {
+      taskSheet.getRange(rowIndex + 1, colStatus + 1).setValue('完了');
+      if (colNote >= 0) {
+        taskSheet.getRange(rowIndex + 1, colNote + 1).setValue(
+          `Claude自動調査完了(${items.length}件, Geminiレート制限フォールバック) ${now}`);
+      }
+    }
+    synced++;
+  });
+
+  return { synced: synced };
 }
 
 function formatDate_(d) {

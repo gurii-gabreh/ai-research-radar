@@ -16,6 +16,8 @@
 - 処理が終わった依頼タスクは、GASが依頼タスクタブの該当行のステータスを「完了」に更新する
   (Claude Codeの既存Routineは`Repo`が既知のリポジトリ名でも`ai-research-radar`でもない場合のみ処理するため、
   `ai-research-radar`向けのタスクはこのGAS経由の仕組みだけが処理する)
+- **Geminiがレート制限の場合**: 専用のClaude調査ルームが代わりにWeb検索で調査し、結果を
+  `data/claude-fallback-results.json`へcommit・push、GASがそれをプル型で取り込む(詳細は下記)
 
 ```
 依頼タスクタブに Task 追加
@@ -59,6 +61,47 @@ gemini-monitor側の計測は日々蓄積されていくため、時間が経つ
 Gemini APIのレート制限(429)に当たった場合は、依頼タスクタブの備考に
 「⚠ レート制限/利用上限に達したため今回は見送り、次回の自動実行時に再試行します」と明記され、
 ステータスは変更されない(=完了/スキップにはならない)。翌日の自動実行時に自動で再試行される。
+
+## Geminiレート制限時のClaude調査フォールバック
+
+Geminiがレート制限で調査できなかったキーワードは、専用のClaude調査ルーム(別のClaude Codeセッション)が
+代わりにWeb検索で調査できる。progress-tracker-dashboardの`syncFromGithub`と同じ「プル型同期」構成。
+
+```
+Gemini調査失敗(429) → 依頼タスクタブの備考に「レート制限」の印
+      │
+      ▼ (Claude調査ルームが備考を見て検知、自前でWeb検索調査)
+Claude調査ルームが data/claude-fallback-results.json に結果を追記してcommit・push
+      │
+      ▼ (毎日のcollectAIResearch実行時、GASがGitHubへ取りに行く)
+GAS (syncClaudeResearchFromGithub_) が収集ログへ追記 + 依頼タスクの ステータス/備考 を更新
+```
+
+Claude調査ルーム側で実装してほしいこと:
+
+1. 実装進捗管理シートの依頼タスクタブを確認し、`Repo=ai-research-radar`かつステータスが
+   `完了`/`スキップ`ではなく、備考に「レート制限」という文字列を含む行を探す
+2. 該当するキーワードごとに、直近1週間程度の最新AI技術情報・活用事例をWeb検索で3〜5件調査する
+   (信頼できる情報源から。gas/Code.gsの`researchWithGemini_`が使っているプロンプトと同じ方針)
+3. このリポジトリの`data/claude-fallback-results.json`を読み、`results`配列の**末尾に追記**する形で
+   以下のオブジェクトを追加する(既存のエントリは消さない):
+   ```json
+   {
+     "keyword": "依頼タスクタブのTask列と完全に一致する文字列",
+     "items": [
+       { "category": "カテゴリ名", "title": "タイトル", "summary": "80字程度の日本語要約", "sourceUrl": "元記事のURL" }
+     ],
+     "researchedAt": "YYYY-MM-DD HH:mm"
+   }
+   ```
+4. commit・push する
+5. GAS側は毎日の`collectAIResearch`実行時に自動でこのファイルを取りに行き、収集ログへの追記
+   (使うAI列は`Claude`になる)・依頼タスクの完了処理(【毎日】【N回】マーカーがあればそれに従う)・
+   ソースURLが既に収集済みの記事の重複排除を行う。**すぐに反映結果を確認したい場合**は、
+   GAS側のApps Scriptエディタで`syncClaudeResearchOnly`を手動実行すれば、日次トリガーを待たずに
+   その場で反映できる
+6. `data/claude-fallback-results.json`のエントリは消さなくてよい(GAS側はソースURLで重複排除するため、
+   同じ内容を残しておいても再度取り込まれることはない)
 
 ## 依頼タスクの追加方法
 

@@ -1,0 +1,4 @@
+{
+  "_readme": "Geminiがレート制限(429)で調査できなかったキーワードを、専用のClaude調査ルームが代わりに調査した結果を記録するファイル。GAS側(gas/Code.gsのsyncClaudeResearchFromGithub_)がこのファイルを定期的に取りに行き、実装進捗管理シートの依頼タスクタブと収集ログへ反映する(プル型同期)。Claude調査ルームは、resultsの末尾に新しいエントリを追記してcommit・pushする(既存エントリは削除しない。GAS側は既にsourceUrlが収集ログにある記事は重複追記しない)。書き方の例はREADME.md参照。",
+  "results": []
+}
