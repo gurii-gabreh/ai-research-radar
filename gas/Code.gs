@@ -73,6 +73,18 @@ function collectAIResearch() {
           `Gemini自動調査完了(${items.length}件) ${formatDateTime_(new Date())}`);
       }
     } catch (e) {
+      if (e.isRateLimit) {
+        // レート制限/利用上限は一時的な問題である可能性が高いため、ステータスは変更せず
+        // (未着手のまま残す)次回の日次トリガーで自動的に再試行されるようにする。
+        // 備考に分かりやすく明記して、何が起きたか一覧上ですぐ分かるようにする。
+        if (colNote >= 0) {
+          taskSheet.getRange(r + 1, colNote + 1).setValue(
+            `⚠ レート制限/利用上限に達したため今回は見送り、次回の自動実行時に再試行します (${formatDateTime_(new Date())})`);
+        }
+        // 一度レート制限に当たったら、同じ実行内で残りのキーワードを試しても
+        // ほぼ確実に同じ結果になるため、無駄なAPI呼び出しをせず処理を打ち切る。
+        break;
+      }
       taskSheet.getRange(r + 1, colStatus + 1).setValue('スキップ');
       if (colNote >= 0) {
         taskSheet.getRange(r + 1, colNote + 1).setValue(`Geminiエラー: ${e.message}`);
@@ -101,6 +113,13 @@ function researchWithGemini_(keyword, apiKey) {
     payload: JSON.stringify(payload),
     muteHttpExceptions: true
   });
+  if (res.getResponseCode() === 429) {
+    // レート制限(1分あたりの上限)・日次/月次クォータ超過のどちらも429で返ってくるため、
+    // ここでは区別せず「利用上限に達した」として扱う(呼び出し側が自動リトライを判断する)。
+    const err = new Error(`Gemini APIのリクエスト上限(429)に達しました: ${res.getContentText()}`);
+    err.isRateLimit = true;
+    throw err;
+  }
   if (res.getResponseCode() !== 200) {
     throw new Error(`Gemini API error ${res.getResponseCode()}: ${res.getContentText()}`);
   }
