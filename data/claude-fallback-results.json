@@ -1,4 +1,41 @@
 {
   "_readme": "Geminiがレート制限(429)で調査できなかったキーワードを、専用のClaude調査ルームが代わりに調査した結果を記録するファイル。GAS側(gas/Code.gsのsyncClaudeResearchFromGithub_)がこのファイルを定期的に取りに行き、実装進捗管理シートの依頼タスクタブと収集ログへ反映する(プル型同期)。Claude調査ルームは、resultsの末尾に新しいエントリを追記してcommit・pushする(既存エントリは削除しない。GAS側は既にsourceUrlが収集ログにある記事は重複追記しない)。書き方の例はREADME.md参照。",
-  "results": []
+  "results": [
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "業界動向・標準化",
+          "title": "Google・Microsoftなどが業務ソフト連携のAIエージェント標準で合意、Anthropic対抗",
+          "summary": "Google、Microsoft、Salesforce等がAIエージェントと業務ソフトを繋ぐ共通標準を採用、AnthropicのMCP優位に対抗する動き。",
+          "sourceUrl": "https://www.ciodive.com/news/-Microsoft-AI-agent-standard-Google-a2a-interoperability/747593/"
+        },
+        {
+          "category": "規制・コンプライアンス",
+          "title": "EU AI Act第50条の透明性義務が2026年8月2日発効",
+          "summary": "AIとの対話通知やAI生成コンテンツへの機械可読マーキング等が義務化され、企業のエージェント運用に影響。",
+          "sourceUrl": "https://eguweb.jp/ai/81274/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Microsoft、Sales Agent・Service AgentをGA、Dynamics 365/365 Copilotに統合",
+          "summary": "商談要約や顧客対応をCRM内で自動処理するエージェントが正式提供開始、70以上のMCPツールを追加した。",
+          "sourceUrl": "https://techcommunity.microsoft.com/blog/Microsoft365CopilotBlog/sales-agent-is-now-generally-available-bringing-customer-and-deal-intelligence-i/4532629"
+        },
+        {
+          "category": "市場動向",
+          "title": "Gartner、2026年末までに企業アプリの40%がタスク特化型AIエージェント搭載と予測",
+          "summary": "2025年の5%未満から急増、業務アプリへのAIエージェント組み込みが標準的な機能になりつつある。",
+          "sourceUrl": "https://www.digitalapplied.com/blog/ai-agent-adoption-2026-enterprise-data-points"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Anthropic、Claude Coworkをウェブ・モバイルへ拡大",
+          "summary": "デスクトップ専用だったエージェント型ツールをクラウド実行方式に変更、端末オフラインでもタスク継続可能に。",
+          "sourceUrl": "https://techcrunch.com/2026/07/07/the-coding-agent-wars-are-spilling-into-the-rest-of-the-office-claude-cowork/"
+        }
+      ],
+      "researchedAt": "2026-08-02 13:31"
+    }
+  ]
 }
