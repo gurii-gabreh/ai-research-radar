@@ -64,22 +64,47 @@ function collectAIResearch() {
     const keyword = row[colTask];
     if (!keyword) continue;
 
+    const repeatConfig = parseRepeatConfig_(colNote >= 0 ? row[colNote] : '');
+
     try {
       const items = researchWithGemini_(keyword, apiKey);
       appendResults_(resultSheet, items);
-      taskSheet.getRange(r + 1, colStatus + 1).setValue('完了');
-      if (colNote >= 0) {
-        taskSheet.getRange(r + 1, colNote + 1).setValue(
-          `Gemini自動調査完了(${items.length}件) ${formatDateTime_(new Date())}`);
+      const now = formatDateTime_(new Date());
+
+      if (repeatConfig.mode === 'daily') {
+        // 完了にはせず、翌日以降も繰り返し対象として残す(収集ログには毎回追記されていく)
+        if (colNote >= 0) {
+          taskSheet.getRange(r + 1, colNote + 1).setValue(`【毎日】最終実施: ${now}(${items.length}件取得)`);
+        }
+      } else if (repeatConfig.mode === 'limited') {
+        const doneCount = repeatConfig.done + 1;
+        if (doneCount >= repeatConfig.limit) {
+          taskSheet.getRange(r + 1, colStatus + 1).setValue('完了');
+          if (colNote >= 0) {
+            taskSheet.getRange(r + 1, colNote + 1).setValue(
+              `【${repeatConfig.limit}回】${doneCount}/${repeatConfig.limit}回実施(最終: ${now}) → 完了`);
+          }
+        } else if (colNote >= 0) {
+          taskSheet.getRange(r + 1, colNote + 1).setValue(
+            `【${repeatConfig.limit}回】${doneCount}/${repeatConfig.limit}回実施(最終: ${now})`);
+        }
+      } else {
+        taskSheet.getRange(r + 1, colStatus + 1).setValue('完了');
+        if (colNote >= 0) {
+          taskSheet.getRange(r + 1, colNote + 1).setValue(`Gemini自動調査完了(${items.length}件) ${now}`);
+        }
       }
     } catch (e) {
+      // 繰り返し設定(【毎日】【N回】)が備考に入っている場合、それを失うと次回以降
+      // 繰り返しではなく単発扱いに戻ってしまう。エラー時もマーカー+進捗を残す。
+      const marker = repeatMarkerText_(repeatConfig);
       if (e.isRateLimit) {
         // レート制限/利用上限は一時的な問題である可能性が高いため、ステータスは変更せず
         // (未着手のまま残す)次回の日次トリガーで自動的に再試行されるようにする。
         // 備考に分かりやすく明記して、何が起きたか一覧上ですぐ分かるようにする。
         if (colNote >= 0) {
           taskSheet.getRange(r + 1, colNote + 1).setValue(
-            `⚠ レート制限/利用上限に達したため今回は見送り、次回の自動実行時に再試行します (${formatDateTime_(new Date())})`);
+            `${marker}⚠ レート制限/利用上限に達したため今回は見送り、次回の自動実行時に再試行します (${formatDateTime_(new Date())})`);
         }
         // 一度レート制限に当たったら、同じ実行内で残りのキーワードを試しても
         // ほぼ確実に同じ結果になるため、無駄なAPI呼び出しをせず処理を打ち切る。
@@ -87,10 +112,35 @@ function collectAIResearch() {
       }
       taskSheet.getRange(r + 1, colStatus + 1).setValue('スキップ');
       if (colNote >= 0) {
-        taskSheet.getRange(r + 1, colNote + 1).setValue(`Geminiエラー: ${e.message}`);
+        taskSheet.getRange(r + 1, colNote + 1).setValue(`${marker}Geminiエラー: ${e.message}`);
       }
     }
   }
+}
+
+/**
+ * 備考欄の先頭にある繰り返し設定マーカーを解釈する。
+ *   【毎日】      … 毎回実行し、完了にしない(収集ログに毎日追記され続ける)
+ *   【N回】       … 通算N回実行したら完了にする(N/N回実施を備考に記録して回数を追跡)
+ *   マーカーなし  … 従来通り、1回実行したら完了にする
+ */
+function parseRepeatConfig_(note) {
+  if (!note) return { mode: 'once' };
+  if (note.indexOf('【毎日】') !== -1) return { mode: 'daily' };
+  const m = note.match(/【(\d+)回】/);
+  if (m) {
+    const limit = Number(m[1]);
+    const progress = note.match(/(\d+)\/\d+回実施/);
+    return { mode: 'limited', limit: limit, done: progress ? Number(progress[1]) : 0 };
+  }
+  return { mode: 'once' };
+}
+
+/** parseRepeatConfig_で解釈した設定を、備考に書き戻す際の先頭マーカー文字列に変換する */
+function repeatMarkerText_(config) {
+  if (config.mode === 'daily') return '【毎日】';
+  if (config.mode === 'limited') return `【${config.limit}回】${config.done}/${config.limit}回実施 `;
+  return '';
 }
 
 function researchWithGemini_(keyword, apiKey) {
