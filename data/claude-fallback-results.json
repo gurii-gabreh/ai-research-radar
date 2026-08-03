@@ -36,6 +36,36 @@
         }
       ],
       "researchedAt": "2026-08-02 13:31"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "標準化・インフラ",
+          "title": "MCP(Model Context Protocol)、2026-07-28仕様でステートレス化へ大幅刷新",
+          "summary": "セッションIDを廃止し全リクエストを自己完結型に変更、エージェント基盤の水平スケーリングが容易になった。",
+          "sourceUrl": "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Dynatrace、自律型SREエージェントとノーコードAgent Builderを発表",
+          "summary": "障害調査・復旧を自動化するAutonomous SRE Agent等を追加、2026年8月から順次提供開始予定。",
+          "sourceUrl": "https://www.dynatrace.com/news/press-release/dynatrace-introduces-domain-specific-agents/"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "Stairwell、マルウェア調査向けエージェント型プラットフォーム「Backstory」を発表",
+          "summary": "マルウェア亜種の影響範囲を数秒で特定するAIエージェントを新提供、AI生成マルウェアの急増に対応する。",
+          "sourceUrl": "https://www.helpnetsecurity.com/2026/07/29/stairwell-backstory-agentic-investigation/"
+        },
+        {
+          "category": "モデル性能",
+          "title": "Terminal-Bench 2.1でGPT-5.6 SolとClaude Opus 5が僅差のトップ争い",
+          "summary": "コーディングエージェント評価でGPT-5.6 Solが89.5%、Claude Opus 5が89.1%と僅差の首位争いとなった。",
+          "sourceUrl": "https://www.morphllm.com/best-ai-coding-agents-2026"
+        }
+      ],
+      "researchedAt": "2026-08-03 09:27"
     }
   ]
 }
