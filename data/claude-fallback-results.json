@@ -1,4 +1,35 @@
 {
   "_readme": "Geminiがレート制限(429)で調査できなかったキーワードを、専用のClaude調査ルームが代わりに調査した結果を記録するファイル。GAS側(gas/Code.gsのsyncClaudeResearchFromGithub_)がこのファイルを定期的に取りに行き、実装進捗管理シートの依頼タスクタブと収集ログへ反映する(プル型同期)。Claude調査ルームは、resultsの末尾に新しいエントリを追記してcommit・pushする(既存エントリは削除しない。GAS側は既にsourceUrlが収集ログにある記事は重複追記しない)。書き方の例はREADME.md参照。",
-  "results": []
+  "results": [
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "規制・法制度",
+          "title": "EU AI Act第50条の透明性義務が適用開始",
+          "summary": "2026年8月2日よりEU AI Act第50条が適用開始。AI生成コンテンツの機械可読マーキングや、AIとの対話であることの明示が事業者に義務付けられた。",
+          "sourceUrl": "https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act"
+        },
+        {
+          "category": "規制・法制度",
+          "title": "カリフォルニア州AI透明性法(SB942)が施行",
+          "summary": "同じく8月2日発効のカリフォルニア州SB942(AI透明性法)は、月間100万人超のAI事業者に生成物への来歴表示や無料の判定ツール提供を義務付ける。",
+          "sourceUrl": "https://www.morganlewis.com/pubs/2026/08/new-california-ai-disclosure-rules-become-operative"
+        },
+        {
+          "category": "活用事例",
+          "title": "Googleのエージェントが店舗へ電話し購入代行",
+          "summary": "Googleが検索・AIモードのエージェント機能を拡張。ユーザーに代わって店舗へ電話し在庫確認や購入手続きまで代行するエージェント型ショッピングを開始した。",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/shopping/how-to-agentic-calling-let-google-call/"
+        },
+        {
+          "category": "導入事例",
+          "title": "Huawei Cloud、タイでエージェント基盤を提供開始",
+          "summary": "Huawei Cloudがタイでエージェント向けインフラ「Agentic Infrastructure」と自律開発エージェント「CodeArts Agent」のオープンβを提供開始した。",
+          "sourceUrl": "https://www.prnewswire.com/apac/news-releases/huawei-cloud-launches-agentic-infrastructure-and-codearts-agent-obt-in-thailand-accelerating-enterprise-ai-innovation-302833957.html"
+        }
+      ],
+      "researchedAt": "2026-08-04 09:35"
+    }
+  ]
 }
