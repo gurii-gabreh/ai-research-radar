@@ -30,6 +30,30 @@
         }
       ],
       "researchedAt": "2026-08-04 09:35"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "導入事例",
+          "title": "Cognizant、EMEA向け専門組織「AI Unit」を新設",
+          "summary": "Cognizantが2026年7月28日、欧州・中東・アフリカ企業のエージェントAI導入を支援する専門組織「EMEA AI Unit」を新設。戦略策定から本番稼働まで3段階で支援する。",
+          "sourceUrl": "https://www.prnewswire.com/news-releases/cognizant-launches-emea-ai-unit-to-help-enterprises-scale-agentic-ai-adoption-302835936.html"
+        },
+        {
+          "category": "活用事例",
+          "title": "LINEヤフー、法人向けAIエージェント「Agent i Biz」を8月提供開始",
+          "summary": "LINEヤフーが、ECサイト運営やマーケティング分析から施策実行までAIとの対話だけで完結できる法人向けサービス「Agent i Biz」を2026年8月より提供開始する。",
+          "sourceUrl": "https://www.lycbiz.com/jp/agent-i/"
+        },
+        {
+          "category": "市場動向",
+          "title": "Gartner、エージェントAIによりSaaS支出2340億ドルが影響を受けると予測",
+          "summary": "Gartnerは2026年、既存の企業向けアプリケーションソフトウェア支出のうち2340億ドル相当がエージェントAIによる代替・破壊の影響を受けると予測した。",
+          "sourceUrl": "https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence"
+        }
+      ],
+      "researchedAt": "2026-08-05 09:40"
     }
   ]
 }
