@@ -5,6 +5,72 @@
       "keyword": "生成AI エージェント 最新動向",
       "items": [
         {
+          "category": "業界動向・標準化",
+          "title": "Google・Microsoftなどが業務ソフト連携のAIエージェント標準で合意、Anthropic対抗",
+          "summary": "Google、Microsoft、Salesforce等がAIエージェントと業務ソフトを繋ぐ共通標準を採用、AnthropicのMCP優位に対抗する動き。",
+          "sourceUrl": "https://www.ciodive.com/news/-Microsoft-AI-agent-standard-Google-a2a-interoperability/747593/"
+        },
+        {
+          "category": "規制・コンプライアンス",
+          "title": "EU AI Act第50条の透明性義務が2026年8月2日発効",
+          "summary": "AIとの対話通知やAI生成コンテンツへの機械可読マーキング等が義務化され、企業のエージェント運用に影響。",
+          "sourceUrl": "https://eguweb.jp/ai/81274/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Microsoft、Sales Agent・Service AgentをGA、Dynamics 365/365 Copilotに統合",
+          "summary": "商談要約や顧客対応をCRM内で自動処理するエージェントが正式提供開始、70以上のMCPツールを追加した。",
+          "sourceUrl": "https://techcommunity.microsoft.com/blog/Microsoft365CopilotBlog/sales-agent-is-now-generally-available-bringing-customer-and-deal-intelligence-i/4532629"
+        },
+        {
+          "category": "市場動向",
+          "title": "Gartner、2026年末までに企業アプリの40%がタスク特化型AIエージェント搭載と予測",
+          "summary": "2025年の5%未満から急増、業務アプリへのAIエージェント組み込みが標準的な機能になりつつある。",
+          "sourceUrl": "https://www.digitalapplied.com/blog/ai-agent-adoption-2026-enterprise-data-points"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Anthropic、Claude Coworkをウェブ・モバイルへ拡大",
+          "summary": "デスクトップ専用だったエージェント型ツールをクラウド実行方式に変更、端末オフラインでもタスク継続可能に。",
+          "sourceUrl": "https://techcrunch.com/2026/07/07/the-coding-agent-wars-are-spilling-into-the-rest-of-the-office-claude-cowork/"
+        }
+      ],
+      "researchedAt": "2026-08-02 13:31"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "標準化・インフラ",
+          "title": "MCP(Model Context Protocol)、2026-07-28仕様でステートレス化へ大幅刷新",
+          "summary": "セッションIDを廃止し全リクエストを自己完結型に変更、エージェント基盤の水平スケーリングが容易になった。",
+          "sourceUrl": "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Dynatrace、自律型SREエージェントとノーコードAgent Builderを発表",
+          "summary": "障害調査・復旧を自動化するAutonomous SRE Agent等を追加、2026年8月から順次提供開始予定。",
+          "sourceUrl": "https://www.dynatrace.com/news/press-release/dynatrace-introduces-domain-specific-agents/"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "Stairwell、マルウェア調査向けエージェント型プラットフォーム「Backstory」を発表",
+          "summary": "マルウェア亜種の影響範囲を数秒で特定するAIエージェントを新提供、AI生成マルウェアの急増に対応する。",
+          "sourceUrl": "https://www.helpnetsecurity.com/2026/07/29/stairwell-backstory-agentic-investigation/"
+        },
+        {
+          "category": "モデル性能",
+          "title": "Terminal-Bench 2.1でGPT-5.6 SolとClaude Opus 5が僅差のトップ争い",
+          "summary": "コーディングエージェント評価でGPT-5.6 Solが89.5%、Claude Opus 5が89.1%と僅差の首位争いとなった。",
+          "sourceUrl": "https://www.morphllm.com/best-ai-coding-agents-2026"
+        }
+      ],
+      "researchedAt": "2026-08-03 09:27"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
           "category": "規制・法制度",
           "title": "EU AI Act第50条の透明性義務が適用開始",
           "summary": "2026年8月2日よりEU AI Act第50条が適用開始。AI生成コンテンツの機械可読マーキングや、AIとの対話であることの明示が事業者に義務付けられた。",
