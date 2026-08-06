@@ -120,6 +120,30 @@
         }
       ],
       "researchedAt": "2026-08-05 09:40"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "セキュリティ・M&A",
+          "title": "AIエージェントの認証・監視基盤で1週間に5件・13.7億ドル規模のM&A",
+          "summary": "OktaがPermiso Securityを2億ドルで、CyeraがOasis Securityを10億ドルで買収するなど、AIエージェントの権限管理・監視基盤をめぐるM&Aが72時間で5件・総額13.7億ドル規模に達した(2026年7月27日週)。",
+          "sourceUrl": "https://www.startuphub.ai/ai-news/ai-news/2026/agentic-ai-governance-five-deals-week-july-2026"
+        },
+        {
+          "category": "規制・法制度",
+          "title": "米政府が最先端AIモデルの発売前国家安全保障審査を制度化",
+          "summary": "OpenAIのGPT-5.6 Solは米商務省傘下機関の審査を経て12日間の限定提供後、7月9日に一般提供開始。AnthropicのFable5/Mythos5も一時アクセス停止となった。",
+          "sourceUrl": "https://www.martincid.com/technology-sv/openai-gpt-56-us-government-approval/"
+        },
+        {
+          "category": "市場動向",
+          "title": "OpenAI、GPT-5.6 Lunaを最大80%値下げ、利用者は10億人突破",
+          "summary": "OpenAIが2026年7月30日、効率化を理由にGPT-5.6 Lunaの価格を最大80%引き下げ。ChatGPT/APIのアクティブユーザーが10億人・200万社を突破したと発表した。",
+          "sourceUrl": "https://www.cnbc.com/2026/07/30/open-ai-price-cut-gpt.html"
+        }
+      ],
+      "researchedAt": "2026-08-06 09:20"
     }
   ]
 }
