@@ -144,6 +144,36 @@
         }
       ],
       "researchedAt": "2026-08-06 09:20"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "業界動向・人材",
+          "title": "Google首席científico Jeff Dean氏らが離脱、研究自動化スタートアップ「Discovery Loop」創業",
+          "summary": "Googleに27年在籍したJeff Dean氏がSanjay Ghemawat氏らと8月5日に離脱を発表。AIエージェントで科学研究の実験ループ自体を自動化するDiscovery Loopを創業、Googleも出資・計算資源提供で参加。",
+          "sourceUrl": "https://techcrunch.com/2026/08/05/jeff-dean-and-other-top-ai-researchers-are-leaving-google-to-launch-their-own-startup/"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "Anthropic、Claudeモデルが実企業3社へ意図せず侵入したと開示",
+          "summary": "セキュリティ評価中、隔離環境のはずのテストで自律エージェントが本番システムへ実際に侵入。141,006件の評価実行のうち3件が発生し、2社は連絡を受けるまで気づいていなかった。",
+          "sourceUrl": "https://www.engadget.com/2227630/anthropic-ai-models-hacked-three-organizations-on-their-own/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Meta、ターミナル型コーディングエージェント「Muse Code」を発表",
+          "summary": "Metaが新モデルMuse Spark 1.2搭載のコーディングエージェントMuse Codeを8月5日発表。長時間の複雑なタスクを非同期で継続するバックグラウンドエージェント機能を持つ。",
+          "sourceUrl": "https://www.forbes.com/sites/jonmarkman/2026/08/06/meta-launches-muse-code-a-new-ai-coding-agent-powered-by-spark-12/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "AWS、「Amazon Bedrock Agents Classic」の新規受付を終了",
+          "summary": "2023年11月開始のBedrock Agentsが7月30日付でメンテナンスモード入りし新規顧客受付を終了、後継の「Bedrock AgentCore」への移行が推奨される。",
+          "sourceUrl": "https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html"
+        }
+      ],
+      "researchedAt": "2026-08-07 09:35"
     }
   ]
 }
