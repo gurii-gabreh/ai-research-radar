@@ -174,6 +174,36 @@
         }
       ],
       "researchedAt": "2026-08-07 09:35"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "セキュリティ",
+          "title": "Claude Code・Gemini CLI・OpenAI Codexに重大脆弱性、RCE・認証情報窃取の恐れ",
+          "summary": "Black Hat USA 2026でNoveeが発表。GitHub issue経由のプロンプトインジェクションからRCEに至る欠陥等を各社のコーディングエージェントで確認、Claude Codeでは3件の脆弱性(CVE-2026-54316等)が見つかった。",
+          "sourceUrl": "https://www.esecurityplanet.com/threats/black-hat-2026-critical-flaws-found-in-anthropic-google-and-openai-coding-agents/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Cloudflare、AIエージェント向け「Wallets」を発表、人手を介さない決済を実現",
+          "summary": "Cloudflareが8月4日、AIエージェントに継続的なIDと制限付きの自動オンライン決済機能を与える「Cloudflare Wallets」「cloudflare.pay」を発表。雇用主がエージェント単位で利用上限額を設定できる。",
+          "sourceUrl": "https://ai.watch.impress.co.jp/docs/news/2130765.html"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "Sysdig、マシンスピードのクラウド防御「Sysdig Secure AI」を発表",
+          "summary": "Sysdigが8月4日のBlack Hat USAで、AIネイティブなクラウド防御製品「Sysdig Secure AI」を発表。ランタイムインテリジェンスを基に、リスクの調査・優先順位付け・修復をリアルタイムで自動化する。",
+          "sourceUrl": "https://prtimes.jp/main/html/rd/p/000000034.000107539.html"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "Microsoft、AIエージェント専用のコード脆弱性スキャナー「Codename MDASH」をプレビュー公開",
+          "summary": "Microsoft Defenderが企業内のAIエージェントの姿勢リスクを評価する機能を追加。マルチモデルのエージェント型AIでコード脆弱性を検出する「Codename MDASH」も非公開プレビューで提供開始した。",
+          "sourceUrl": "https://learn.microsoft.com/en-us/security-exposure-management/mdash-initiative"
+        }
+      ],
+      "researchedAt": "2026-08-08 09:15"
     }
   ]
 }
