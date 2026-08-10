@@ -204,6 +204,30 @@
         }
       ],
       "researchedAt": "2026-08-08 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "製品・サービス",
+          "title": "NVIDIA、「Agent Toolkit」にPhysicsNeMo・CUDA-Xを追加しエンジニアリング領域へ拡張",
+          "summary": "NVIDIAが7月27日、AI物理シミュレーションのPhysicsNeMoと量子化学等のCUDA-Xライブラリをエージェント向けツール・スキルとして追加。CadenceやSiemensも半導体・産業設計の自律エージェントに活用開始。",
+          "sourceUrl": "https://www.globenewswire.com/news-release/2026/07/27/3333237/0/en/nvidia-expands-nvidia-agent-toolkit-with-nvidia-physicsnemo-and-cuda-x-libraries-to-transform-how-the-world-engineers-designs-and-builds.html"
+        },
+        {
+          "category": "活用事例",
+          "title": "英Dunelm、Google Gemini Enterprise活用のAIショッピングエージェント「Ask Dunelm」を開始",
+          "summary": "英国の家庭用品大手Dunelmが、Google CloudのGemini Enterprise for Customer Experienceを使ったマルチモーダルAIショッピングエージェントをアプリ内で開始。自然な対話で商品検索・提案・部屋への配置イメージ表示ができる。",
+          "sourceUrl": "https://www.retailgazette.co.uk/blog/2026/08/dunelm-launches-ai-shopping-assistant-with-google-cloud/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Helium 10、AmazonセラーデータをClaude・ChatGPTへ接続するMCPコネクタを公開",
+          "summary": "Helium 10が8月3日、自社のAmazon出品者向けデータセットをMCP経由でClaude・ChatGPTに直結する「Helium 10 MCP」を発表。ダッシュボード操作の代わりに自然言語で商品・キーワード・広告データを問い合わせられる。",
+          "sourceUrl": "https://www.streetinsider.com/GetNews/Helium+10+Launches+MCP+Connector%2C+Bringing+Live+Amazon+Data+Into+Claude+and+ChatGPT+for+Sellers/26856508.html"
+        }
+      ],
+      "researchedAt": "2026-08-10 09:10"
     }
   ]
 }
