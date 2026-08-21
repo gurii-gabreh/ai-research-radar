@@ -30,6 +30,15 @@
 10. 不明点や判断に迷ったことがあれば、どんな小さなことも必ず質問する。勝手に実装を進めない。疑問点については、必ず良い方針に進む案を提案する。
 11. 勝手に考えを変えて解釈しない。指示した内容に沿って回答・実装する。より良い案があれば随時提示するが、勝手な実装は禁止。
 12. 実装後は必ず確認テストを行い、ミスのない状態にしてから完了とする。複数ファイルにまたがる場合は、全体の疎通確認をした上で完了とする。
+13. 作業をする前に、下記URL先のナレッジを確認した上で、使えるナレッジがあれば活用すること。
+    - https://docs.google.com/spreadsheets/d/1a77zJ-ANsQmA7M4Bp2S4BYyDHkT-HzFa2UEy6eaN5jY/edit?gid=0#gid=0
+    - https://docs.google.com/spreadsheets/d/1riOPPhGryYlTzYhep51kpcaOUx5uJKFPI1cYjfnbECg/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1679CPPuWq4lciwe4BsJTfjJpiZKvKWogETwtauPThYw/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1pMTIWgWfPFEUkOh4V7KkDsSSYEeSlBDVNr9_zFxBm_o/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1VThcmRG6N-Ui-VmSzKdvLI8vOhfovWUqQsZb2rFJ3TY/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1lApRylSAFDfVWMkMvNhjUnkKJBg7KUNw-yd0e19KA7o/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1V4bbJTbWvg2e37x7iIFEPbpv4Vc5slelF2-EI6CgouA/edit?usp=drivesdk
+    - https://docs.google.com/spreadsheets/d/1GrR8vUc5A_C2Lo6C4Yrt_qqoN_gk6-M_Qw1WAuhp0ZI/edit?usp=drivesdk
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
