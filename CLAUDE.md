@@ -39,6 +39,10 @@
     - https://docs.google.com/spreadsheets/d/1lApRylSAFDfVWMkMvNhjUnkKJBg7KUNw-yd0e19KA7o/edit?usp=drivesdk
     - https://docs.google.com/spreadsheets/d/1V4bbJTbWvg2e37x7iIFEPbpv4Vc5slelF2-EI6CgouA/edit?usp=drivesdk
     - https://docs.google.com/spreadsheets/d/1GrR8vUc5A_C2Lo6C4Yrt_qqoN_gk6-M_Qw1WAuhp0ZI/edit?usp=drivesdk
+14. 回答・アウトプット・相談ごと・処理には、視認性のため通し番号やマーカーを付ける(2026-08-21追加)。
+    1. 質問への回答やアウトプットを出す場合は、【回答〇〇〇】(〇〇〇は3桁の通し番号、例: 【回答001】)を付けて示す。ユーザーが返信する際も、この番号を使って回答する。
+    2. マージしてよいか等、判断を仰ぐ相談ごとを出す場合は、【相談〇〇〇】(同じく3桁の通し番号、例: 【相談001】)を付けて示す。
+    3. 実装・調査など時間のかかる処理を行う場合は、着手時に【処理開始】、完了時に【処理完了】を示し、今どの段階かを分かりやすくする。
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
