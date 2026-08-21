@@ -1,0 +1,7 @@
+{
+  "description": "ai-research-radarの「AI技術情報・活用事例 収集ログ」スプレッドシートの内容をそのままJSON化したもの。シートが正本、こちらはGAS(gas/Code.gs、exportResearchLogToGithub_)による自動ミラー。日次トリガー(collectAIResearch)の実行のたびに、シートに変化があれば自動更新される。",
+  "generatedAt": null,
+  "source": "Google Sheets(AI技術情報・活用事例 収集ログ)via Apps Script (gas/Code.gs)",
+  "items": [],
+  "note": "2026-08-21時点ではまだGAS側でGITHUB_TOKENの設定・初回実行が行われていないため、プレースホルダ(空)の状態。ユーザーがApps Scriptエディタでスクリプト プロパティにGITHUB_TOKENを設定し、collectAIResearch()またはexportResearchLogToGithub_()を実行すると、実際の収集済みデータで上書きされる。"
+}

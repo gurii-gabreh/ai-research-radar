@@ -13,6 +13,9 @@
   (列: `日付, カテゴリ, タイトル, 概要, ソースURL, 収集日時, 使うAI`)
 - **表示**: `index.html`(このリポジトリ、GitHub Pagesで公開)がGASのWebアプリAPI(`doGet`)経由で
   収集ログを取得し、検索・カテゴリ絞り込み付きの一覧として表示する
+- **JSONミラー(2026-08-21追加)**: 収集ログシートの内容は、`collectAIResearch`実行のたびに
+  `exportResearchLogToGithub_`が`data/research-log.json`へも自動でコミットする(シートが正本、
+  JSONは自動ミラー。将来RAG等でこの収集結果を再利用しやすくする目的)
 - 処理が終わった依頼タスクは、GASが依頼タスクタブの該当行のステータスを「完了」に更新する
   (Claude Codeの既存Routineは`Repo`が既知のリポジトリ名でも`ai-research-radar`でもない場合のみ処理するため、
   `ai-research-radar`向けのタスクはこのGAS経由の仕組みだけが処理する)
@@ -39,6 +42,9 @@ index.html (GitHub Pages) が表示
 3. プロジェクトの設定 → スクリプト プロパティ に以下を追加
    - `GEMINI_API_KEY`: Gemini APIキー
    - `TASK_SHEET_ID`: 「実装進捗管理シート」のスプレッドシートID
+   - `GITHUB_TOKEN`: `data/research-log.json`への書き込み権限(Contents API、repoスコープ)を持つ
+     GitHub Personal Access Token(2026-08-21追加。未設定でも収集自体は動くが、JSONミラーの更新のみ
+     スキップされログに記録される)
 4. エディタで`createDailyTrigger`を選択して一度だけ手動実行(権限の認可 + 日次トリガー作成。
    デフォルトは毎日7:00 JST。時刻を変えたい場合は`createDailyTrigger(9)`のように引数で時を指定)
 5. エディタで`rescheduleToLeastCongestedHour`を一度手動実行(下記「実行時刻の自動最適化」参照。

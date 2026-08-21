@@ -7,6 +7,9 @@
  * スクリプト プロパティ(プロジェクトの設定 > スクリプト プロパティ)に以下を設定してください:
  *   GEMINI_API_KEY : Gemini APIキー
  *   TASK_SHEET_ID  : 「実装進捗管理シート」のスプレッドシートID(依頼タスクタブがある方)
+ *   GITHUB_TOKEN   : data/research-log.json への書き込み権限(Contents API、repo スコープ)を持つ
+ *                     GitHub Personal Access Token(2026-08-21追加。収集結果をJSONとしてRAG等で
+ *                     再利用できるよう、シートの内容をGitHubへも保存するために必要)
  *
  * 初回セットアップ時に createDailyTrigger() を一度だけ手動実行してください(認可 + 日次トリガー作成)
  */
@@ -14,6 +17,14 @@
 const TASK_TAB_NAME = '依頼タスク';
 const TARGET_REPO_LABEL = 'ai-research-radar';
 const GEMINI_MODEL = 'gemini-3.5-flash';
+
+// 2026-08-21追加: 収集ログシートの中身をdata/research-log.jsonとしてGitHubへも保存するための設定。
+// Knowledge-Dashboardのupdate-spreadsheets.gs(GAS→GitHub Contents APIでのコミット)と同じ構成を踏襲。
+// 同期の向きはprogress-tracker-dashboardのsyncFromGithub(JSON→シート)とは逆(シート→JSON)である点に注意。
+const RESEARCH_LOG_GITHUB_OWNER = 'gurii-gabreh';
+const RESEARCH_LOG_GITHUB_REPO = 'ai-research-radar';
+const RESEARCH_LOG_GITHUB_BRANCH = 'main';
+const RESEARCH_LOG_GITHUB_PATH = 'data/research-log.json';
 
 // gemini-monitor(Gemini API通信可能時間調査アプリ)が計測している、時間帯別のGemini API
 // 成功率ログ。同じGoogleアカウントが持つ別のスプレッドシートなので、SpreadsheetApp.openById
@@ -126,6 +137,94 @@ function collectAIResearch() {
   // Geminiのレート制限で今回処理できなかった行を、Claude調査ルーム(専用ルーム)が
   // 既に代わりに調査済みならここで反映する。ファイルが無い/読めない場合は何もしない。
   syncClaudeResearchFromGithub_(taskSheet, colRepo, colTask, colStatus, colNote, resultSheet);
+
+  // 今回の実行で収集ログシートに変化があった場合、その内容をdata/research-log.jsonとして
+  // GitHubへも保存する(RAG等でこの収集結果を再利用しやすくするため、2026-08-21追加)。
+  // GITHUB_TOKENが未設定の場合はエラーにせずログだけ残す(シート側の収集自体は今まで通り動く)。
+  try {
+    exportResearchLogToGithub_();
+  } catch (e) {
+    Logger.log('data/research-log.jsonへのエクスポートに失敗しました(収集自体は完了しています): %s', e);
+  }
+}
+
+/**
+ * 収集ログシート(getResultSheet_())の全行を data/research-log.json としてGitHubへコミットする。
+ * 内容(rows)に変化が無い場合はコミットをスキップする(Knowledge-Dashboardのupdate-spreadsheets.gsと
+ * 同じ方針)。手動で今すぐ実行したい場合は、Apps Scriptエディタからこの関数を直接実行してもよい。
+ */
+function exportResearchLogToGithub_() {
+  const values = getResultSheet_().getDataRange().getValues();
+  const header = values[0];
+  const rows = values.slice(1).map(row => {
+    const obj = {};
+    header.forEach((h, i) => { obj[h] = row[i]; });
+    return obj;
+  }).reverse(); // 新しい収集ほど先頭に来るようdoGet()と同じ並びにする
+
+  const existing = fetchExistingResearchLogFile_();
+  const unchanged = existing && JSON.stringify(existing.json.items) === JSON.stringify(rows);
+  if (unchanged) {
+    Logger.log('research-log.jsonの内容に変化が無いため、コミットをスキップしました (items=%s件)', rows.length);
+    return { ok: true, committed: false, count: rows.length };
+  }
+
+  const payload = {
+    description: 'ai-research-radarの「AI技術情報・活用事例 収集ログ」スプレッドシートの内容をそのままJSON化したもの。シートが正本、こちらはGAS(exportResearchLogToGithub_)による自動ミラー。',
+    generatedAt: new Date().toISOString(),
+    source: 'Google Sheets(AI技術情報・活用事例 収集ログ)via Apps Script (gas/Code.gs)',
+    items: rows,
+  };
+  commitResearchLogToGithub_(payload, existing ? existing.sha : null);
+  Logger.log('data/research-log.jsonを更新しました (items=%s件)', rows.length);
+  return { ok: true, committed: true, count: rows.length };
+}
+
+function fetchExistingResearchLogFile_() {
+  const url = 'https://api.github.com/repos/' + RESEARCH_LOG_GITHUB_OWNER + '/' + RESEARCH_LOG_GITHUB_REPO +
+    '/contents/' + RESEARCH_LOG_GITHUB_PATH + '?ref=' + RESEARCH_LOG_GITHUB_BRANCH;
+  const res = UrlFetchApp.fetch(url, { headers: researchLogGithubHeaders_(), muteHttpExceptions: true });
+  if (res.getResponseCode() === 404) return null; // ファイルがまだ存在しない場合は新規作成扱い
+  if (res.getResponseCode() !== 200) {
+    throw new Error('既存research-log.jsonの取得に失敗しました: ' + res.getResponseCode() + ' ' + res.getContentText());
+  }
+  const body = JSON.parse(res.getContentText());
+  const decoded = Utilities.newBlob(Utilities.base64Decode(body.content.replace(/\n/g, ''))).getDataAsString('UTF-8');
+  return { sha: body.sha, json: JSON.parse(decoded) };
+}
+
+function commitResearchLogToGithub_(payload, sha) {
+  const text = JSON.stringify(payload, null, 2) + '\n';
+  const url = 'https://api.github.com/repos/' + RESEARCH_LOG_GITHUB_OWNER + '/' + RESEARCH_LOG_GITHUB_REPO +
+    '/contents/' + RESEARCH_LOG_GITHUB_PATH;
+  const body = {
+    message: 'chore: update research-log.json (' + payload.items.length + ' items) via Apps Script',
+    content: Utilities.base64Encode(Utilities.newBlob(text, 'application/json').getBytes()),
+    branch: RESEARCH_LOG_GITHUB_BRANCH,
+  };
+  if (sha) body.sha = sha;
+
+  const res = UrlFetchApp.fetch(url, {
+    method: 'put',
+    contentType: 'application/json',
+    headers: researchLogGithubHeaders_(),
+    payload: JSON.stringify(body),
+    muteHttpExceptions: true,
+  });
+  if (res.getResponseCode() >= 300) {
+    throw new Error('research-log.jsonのGitHubコミットに失敗しました: ' + res.getResponseCode() + ' ' + res.getContentText());
+  }
+}
+
+/** GitHub API用ヘッダー。トークンはコード内にハードコードせず、スクリプト プロパティのGITHUB_TOKENから読む */
+function researchLogGithubHeaders_() {
+  const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
+  if (!token) throw new Error('スクリプト プロパティ GITHUB_TOKEN が未設定です');
+  return {
+    Authorization: 'Bearer ' + token,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
 }
 
 /**
