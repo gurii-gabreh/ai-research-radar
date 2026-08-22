@@ -228,6 +228,30 @@
         }
       ],
       "researchedAt": "2026-08-10 09:10"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "製品・サービス",
+          "title": "Cloudflare、自然言語でネット動向を可視化する「Radar Researcher」をベータ公開",
+          "summary": "Cloudflareが8月7日、Radar上でDNSクエリやHTTPトラフィック等の統計を自然言語の対話からグラフ化できるAIツール「Radar Researcher」をベータ提供開始。Agents Week(20以上の新機能群)の一環。",
+          "sourceUrl": "https://blog.cloudflare.com/introducing-radar-researcher/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "neoAI、複数工程を自律進行するビジネスパーソン向けコーディングAIエージェント「neoAI Work」を提供開始",
+          "summary": "neoAIが8月13日、法人向けAIエージェント基盤「neoAI Agent Foundation」の新機能として、質問応答中心のneoAI Chatに加え複数工程の業務を自律的に進めるneoAI Workを追加提供開始した。",
+          "sourceUrl": "https://prtimes.jp/main/html/rd/p/000000057.000109048.html"
+        },
+        {
+          "category": "活用事例",
+          "title": "印Kredily、給与・人事業務を実行するAgentic AI「KAI」を発表",
+          "summary": "インドのKredilyが8月14日、110超のスキルで勤怠確認・休暇処理・給与計算実行まで自律的に行うAgentic AI「KAI」をKredily 3.0の一部として発表。25000社超・従業員100万人超の実績を基盤とする。",
+          "sourceUrl": "https://www.newsx.com/business-2/kredily-3-0-launches-kai-agentic-ai-for-payroll-and-hr-and-expands-into-ai-powered-managed-payroll-services-260743/"
+        }
+      ],
+      "researchedAt": "2026-08-22 09:15"
     }
   ]
 }
