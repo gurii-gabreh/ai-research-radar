@@ -252,6 +252,30 @@
         }
       ],
       "researchedAt": "2026-08-22 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "標準化・インフラ",
+          "title": "Amazon・Microsoft・OpenAI等が「Agent Plugins 1.0.0」に合意、Skills・MCPサーバーの配布形式を統一",
+          "summary": "8月6日、Amazon・Microsoft・OpenAI・Vercel・Cursorがエージェントスキルとmcpサーバーを1つのパッケージにまとめる標準仕様に合意。Googleもコアメンテナとして参加、VS CodeやCopilot等に既に統合済み。",
+          "sourceUrl": "https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Google Cloud API Gateway、Gemini・Claude等へ動的振り分けする「モデルルーティング」をパブリックプレビュー公開",
+          "summary": "Google Cloudが8月4日、エンドポイントをハードコードせずOpenAI互換リクエストをGemini・Claude・OpenAI OSS-GPT等へサーバーレスに振り分けるモデルルーティング機能をAPI Gatewayに追加した。",
+          "sourceUrl": "https://developers.googleblog.com/a-unified-api-for-ai-model-routing/"
+        },
+        {
+          "category": "導入事例",
+          "title": "Econz・Google Cloud、ベンガルール初の「Gemini Enterprise Experience Centre」を開設",
+          "summary": "Econz IT ServicesとGoogle Cloudが8月22日、企業がAgentic AIを体験・構築・検証できる拠点をベンガルールに開設。HR・財務・営業等向けのノーコード/ローコードAgentic Sandboxも提供する。",
+          "sourceUrl": "https://www.deccanherald.com/business/companies/econz-google-cloud-launch-gemini-enterprise-experience-centre-2-4114452"
+        }
+      ],
+      "researchedAt": "2026-08-24 09:15"
     }
   ]
 }
