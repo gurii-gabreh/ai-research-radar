@@ -276,6 +276,30 @@
         }
       ],
       "researchedAt": "2026-08-24 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "業界動向・パートナーシップ",
+          "title": "Anthropic、コンサル大手Bain & Companyとグローバル提携、Claude Partner Networkの最上位「Global Premier」参加",
+          "summary": "8月25日発表。Bainは全社員19000人にClaudeを既に展開済みで、これを土台にAI戦略・業務変革の共同クライアント支援を拡大。認定資格者1000人以上等の最上位ティア要件を満たす。",
+          "sourceUrl": "https://www.bain.com/about/media-center/press-releases/2026/bain-company-announces-partnership-with-anthropic-to-accelerate-clients-enterprise-ai-transformations/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Nutanix Enterprise AI(NAI)2.8がGA、MCPゲートウェイでエージェントのアクセスを一元統制",
+          "summary": "Nutanixが8月26日、NAI 2.8を正式提供開始。Agent GatewayにMCPゲートウェイを追加し、エージェントが利用できるツール・データへのアクセスを集中管理できるようにした。",
+          "sourceUrl": "https://www.stocktitan.net/news/NTNX/nutanix-gives-enterprises-the-freedom-to-run-production-agentic-ai-0z7acyj2m0ti.html"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Google、Gemini Enterprise Agent Platformの主要機能をGA、最長7日間の非同期実行が可能に",
+          "summary": "7月29日、エージェントを最大7日間非同期実行できる「Agent Runtime」や、構造化プロファイルを保持する「Memory Bank」などがGA。複数段階にまたがる業務プロセスを人手の介在なく処理できる。",
+          "sourceUrl": "https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-agent-platform"
+        }
+      ],
+      "researchedAt": "2026-08-26 09:15"
     }
   ]
 }
