@@ -1,5 +1,24 @@
 # ai-research-radar
 
+> **⚠️ 廃止済み(2026-08-26)**: このリポジトリは廃止し、`progress-tracker-dashboard`の
+> `data/ai-research-feed.json`(Claude+WebSearchによる日次調査Routine)に統合しました。
+>
+> **廃止の経緯**: 「AI技術情報・活用事例 収集ログ」スプレッドシートの実データ(2026-08-04〜08-25分、
+> 32件)を調査したところ、**全行の「使うAI」列が例外なく"Claude"で、Geminiが実際に書き込んだ形跡が
+> 1件も無い**ことが判明した。`gas/Code.gs`の`appendResults_(sheet, items, aiName)`は`aiName`未指定時
+> デフォルトで`'Gemini'`を書き込む実装のため(本来のGemini実行経路である`collectAIResearch()`は
+> `aiName`を渡さない)、もし本当にGeminiが動いていればこのデフォルト値が記録されているはずである。
+> しかし実データは全て、Geminiのレート制限フォールバックとして設計された`syncClaudeResearchFromGithub_`
+> (明示的に`'Claude'`を渡す)経由の記録だった。つまり「本番」のはずのGemini経路は一度も実行されず、
+> 「非常時のフォールバック」のはずのClaude経路だけが実質的な本番として動いていたことになる。
+> 詳細はprogress-tracker-dashboardの`data/concept-log.json`(CL-004)を参照。
+>
+> 収集ログの実データ32件(重複なし分)は`progress-tracker-dashboard`の`data/ai-research-feed.json`へ
+> 統合済み。今後の日次AI技術調査はそちらのRoutine(Claude+WebSearch、5テーマ深掘り)に一本化する。
+> このリポジトリのGAS日次トリガー(`collectAIResearch`)が実際にインストールされている場合は、
+> Apps Scriptエディタから手動で削除してください(トリガーはコードの外側の実行設定のため、
+> Claude側からは操作できません)。
+
 キーワードを与えると、Gemini APIが最新のAI技術情報・活用事例を自動調査して一覧化するアプリ。
 
 ## アーキテクチャ
