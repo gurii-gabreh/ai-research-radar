@@ -300,6 +300,30 @@
         }
       ],
       "researchedAt": "2026-08-26 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "業界動向・パートナーシップ",
+          "title": "Salesforce・Anthropicが「Claudeforce」を発表、ClaudeをAgentforce・Slack全体の既定推論エンジンに",
+          "summary": "8月26日発表。Slack AI・Slackbot・Agentforce Coworker等でClaudeを既定モデル化。37種のプリビルド営業スキルを持つプラグイン「Salesforce in Claude」も提供、9月に公開ベータ予定。",
+          "sourceUrl": "https://www.salesforce.com/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "AccuKnox、モデル非依存のエージェント構築・運用・統制基盤「AgentZ」を発表",
+          "summary": "AccuKnoxが8月27日、サンドボックス・ワークフロー・ロールベースアクセス・監査ログを1つにまとめたエージェント基盤AgentZを発表。OpenAI・Claude・Grok等に対応し、SaaS/オンプレ/エアギャップ環境で展開できる。",
+          "sourceUrl": "https://www.globenewswire.com/news-release/2026/08/27/3351759/0/en/accuknox-launches-agentz-to-help-enterprises-build-run-and-govern-ai-agents-at-scale.html"
+        },
+        {
+          "category": "活用事例",
+          "title": "印Cashfree、中小企業向け決済業務Super Agent「Relay」を正式提供開始",
+          "summary": "5月からのベータを経て一般提供開始。カート復旧・決済失敗の再試行・代金引換確認・紛争対応等を自然言語指示だけで自律実行し、週60時間かかる決済業務を45分未満に短縮できるとする。",
+          "sourceUrl": "https://ibsintelligence.com/ibsi-news/cashfrees-relay-brings-ai-agents-to-smb-payment-operations/"
+        }
+      ],
+      "researchedAt": "2026-08-29 09:15"
     }
   ]
 }
