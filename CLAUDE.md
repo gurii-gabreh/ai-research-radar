@@ -52,6 +52,7 @@
     - 大きな実装など、時間のかかる作業は、従来通りCCRの別ルーム(worker-room)に依頼すること。
     - 承認待ちで処理が止まる問題は、サブエージェント化では解決しない。サブエージェントも呼び出し元と同じ許可モードを引き継ぐため、承認が必要なアクションはサブエージェントでも同様に止まる。この問題への対策(スクリプト化等で承認自体を発生させない設計にすること)は別途検討・記録すること(例: progress-tracker-dashboardのPTD-045)。
 19. 既存の休止中(IDLE)worker-roomセッションへ追加の指示を出したいとき、セッション間メッセージ送信(SendMessage等)では宛先として認識されず届かないことがある(2026-08-29確認。ルール18のPTD-045=ネットワークegress問題とは別原因)。この場合は、`create_trigger`(`persistent_session_id`にそのセッションIDを指定し、cron/run_once_atは指定しない一回限りのRoutineとして作成)でメッセージを積み、`fire_trigger`で即時発火して配信し、配信後は`delete_trigger`で片付ける、という手順を標準手順とする。新規に`create_session`で作るセッションはこの問題の対象外。
+20. ユーザーへ【相談】を持ちかけるときは、必ず経緯(過去はどうだったか→今どうなっているか→これからどうしたいか)を明記した上で、何をしたいかを相談し、その時点で認識している懸念点も必ず添えること(2026-08-29追加、ユーザー指摘)。
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
