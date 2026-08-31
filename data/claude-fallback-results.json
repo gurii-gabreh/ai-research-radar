@@ -324,6 +324,30 @@
         }
       ],
       "researchedAt": "2026-08-29 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "セキュリティ",
+          "title": "Okta、AIエージェントを第一級IDとして管理する「Agent SSO」をGA",
+          "summary": "8月24日発表。Cross App Access標準を採用し、AIエージェントをUniversal Directoryへ人間社員同様に登録、静的なAPIキーの代わりに短命な統制済みトークンを発行する。Okta SSOの標準プランに追加費用なしで含まれる。",
+          "sourceUrl": "https://www.okta.com/newsroom/press-releases/okta-brings-first-class-identity-to-ai-agents-with-agent-sso/"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "Google Cloud、法律事務所向け業界特化パッケージ「Gemini Enterprise for Legal」をプレビュー公開",
+          "summary": "8月25日発表。Gemini Enterpriseの初の業界特化版で、契約レビュー・デューデリジェンス等を実行する法務専用スキル・エージェント・文書管理システム連携を搭載。Cleary GottliebやFreshfields等が導入企業として参加。",
+          "sourceUrl": "https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-legal"
+        },
+        {
+          "category": "業界動向・インフラ",
+          "title": "AWS・NVIDIA、AIインフラ提携を拡大しGPU200万基追加とVera CPU導入へ",
+          "summary": "8月26日発表。両社がAIファクトリー・CPU・ネットワーキング等での協業を深化。エージェント型AI・フィジカルAI向けにNVIDIA製Vera CPUをAWS基盤へ導入する計画で、米政府向けにGPU10万基のAIファクトリーも構築する。",
+          "sourceUrl": "https://press.aboutamazon.com/aws/2026/8/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai"
+        }
+      ],
+      "researchedAt": "2026-08-31 09:15"
     }
   ]
 }
