@@ -348,6 +348,30 @@
         }
       ],
       "researchedAt": "2026-08-31 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "製品・サービス",
+          "title": "Anthropic、ブラウザ操作エージェント「Claude in Chrome」を正式提供開始",
+          "summary": "8月26日、有料プラン向けにClaude in ChromeをGA。承認なしで自律的にクリック・入力・ページ遷移等を実行可能に。プロンプトインジェクション対策の3層防御で攻撃成功率0〜0.3%に抑えたとする。",
+          "sourceUrl": "https://claude.com/blog/claude-in-chrome-generally-available"
+        },
+        {
+          "category": "業界動向・パートナーシップ",
+          "title": "Microsoft・HUMAIN、LEAP 2026でエンタープライズAI提携を拡大、企業向け「AI PC」も発表",
+          "summary": "8月31日発表。Microsoft 365 CopilotとHUMAIN ONEを組み合わせた「AI生産性バンドル」を中東・アフリカ100万ユーザー規模で提供、CPU・GPU・NPUを統合した企業向けAI PCも9月20日から提供開始予定。",
+          "sourceUrl": "https://www.prnewswire.com/news-releases/microsoft-and-humain-expand-strategic-collaboration-at-leap-2026-with-new-enterprise-ai-offering-and-ai-pc-302865157.html"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "xAI、常時稼働の自律型AIチームメイト「Grok Bot」をベータ公開",
+          "summary": "8月11日、各BotがクラウドPC(ブラウザ・ターミナル・ファイルシステム)を専有し既存ツールへログインして24時間365日マルチステップ業務を無人で完遂する「Grok Bot」を発表。SuperGrok Heavy等の既存プランに含まれる。",
+          "sourceUrl": "https://www.unite.ai/xai-launches-grok-bot-always-on-ai-teammates-with-their-own-cloud-computers/"
+        }
+      ],
+      "researchedAt": "2026-09-01 09:15"
     }
   ]
 }
