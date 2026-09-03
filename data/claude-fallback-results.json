@@ -372,6 +372,30 @@
         }
       ],
       "researchedAt": "2026-09-01 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "モデル性能",
+          "title": "Anthropic、長時間エージェント処理向けにFable 5.1・Mythos 5.1を発表、キャッシュ読取価格を75%引き下げ",
+          "summary": "9月1日発表。入出力価格は据え置いたまま、キャッシュ読取を100万トークン0.25ドルに引き下げ。同一コードベースやツール定義を繰り返し参照する長時間稼働のエージェント作業のコストを最大約45%削減できるとする。",
+          "sourceUrl": "https://venturebeat.com/technology/anthropics-claude-fable-5-1-and-mythos-5-1-arrive-with-a-75-cost-reduction-for-fable-cache-reads"
+        },
+        {
+          "category": "セキュリティ・エコシステム",
+          "title": "CrowdStrike、「エージェント時代」のパートナー専門認定制度を新設",
+          "summary": "8月31日のFal.Con 2026で発表。Falcon platform上でAIエージェントを再販・管理・構築・提供する4つの道筋を提供し、パートナー構築エージェント向けの「Verified Agent」認定も新設した。",
+          "sourceUrl": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-ai-partner-specialization-for-the-agentic-era/"
+        },
+        {
+          "category": "導入事例",
+          "title": "韓国KT、ウリ銀行のAIチャットボット・相談ボットを刷新、新ソリューション「Agent Connect」を投入",
+          "summary": "8月31日、KTがウリ銀行のAIチャットボット・相談ボット刷新プロジェクトを受注。チャネル間で文脈を保持したままAIバンカー等のエージェントへ会話・業務処理を引き継ぐ「Agent Connect」を導入し、応答率向上を狙う。",
+          "sourceUrl": "https://en.sedaily.com/technology/2026/08/31/kt-to-rebuild-woori-banks-ai-chatbot-and-consultation-bot"
+        }
+      ],
+      "researchedAt": "2026-09-03 09:15"
     }
   ]
 }
