@@ -396,6 +396,30 @@
         }
       ],
       "researchedAt": "2026-09-03 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "モデル性能",
+          "title": "OpenAI、agentic性能を大幅強化した新フロンティアモデル「GPT-6 Astra」を発表",
+          "summary": "9月3日発表。コンピュータ操作ベンチマークOSWorld 2.0で72.6%、Agent's Last Examで59.3%を記録しGPT-5.6 Solを上回る。ChatGPT Plus/Pro/Business/Enterprise・APIで順次提供。",
+          "sourceUrl": "https://openai.com/index/gpt-6-astra/"
+        },
+        {
+          "category": "セキュリティ",
+          "title": "CrowdStrike・NVIDIA、自律的に攻防を繰り返すエージェント型サイバーセキュリティ「SafeMind」を発表",
+          "summary": "9月1日のFal.Con 2026で発表。攻撃側モデル「Red Tempest」と防御側モデル「Blue Solano」がNVIDIAのデジタルツイン環境で脆弱性発見と修復を自律的に繰り返す。Falcon platformにネイティブ統合。",
+          "sourceUrl": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-frontier-models-for-cybersecurity-with-nvidia/"
+        },
+        {
+          "category": "活用事例",
+          "title": "GMO TECH、店舗運営を対話で支援する「GMO店舗AIエージェント」β版を提供開始",
+          "summary": "9月1日提供開始。第一弾はMEO運用向けで、Googleビジネスプロフィールへの投稿作成・クチコミ返信・検索順位分析等を、専門知識不要の日常会話形式の指示だけで実行できる。",
+          "sourceUrl": "https://hd.gmotech.jp/blog/2026/09/01/gmotechnews20260901/"
+        }
+      ],
+      "researchedAt": "2026-09-04 09:15"
     }
   ]
 }
