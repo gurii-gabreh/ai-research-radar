@@ -420,6 +420,30 @@
         }
       ],
       "researchedAt": "2026-09-04 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "セキュリティ",
+          "title": "Proofpoint、OpenAI「Daybreak」モデルを活用した「SOC Analyst Agent」を発表",
+          "summary": "9月3日発表。自然言語の質問を構造化された追跡可能な調査結果へ変換し、Proofpointの各種セキュリティデータを横断調査する。重要な判断は人間に委ねる設計。ベータ顧客向け限定プレビュー中、Q3末までにGA予定。",
+          "sourceUrl": "https://www.proofpoint.com/us/newsroom/press-releases/proofpoint-soc-analyst-agent-openai-daybreak"
+        },
+        {
+          "category": "活用事例",
+          "title": "建設業クラウドCONOC、JAPAN AIと共同開発のAIエージェント第1弾「ゲンバフォトAI」「ゲンチョウAI」を提供開始",
+          "summary": "9月1日提供開始。現場写真の整理・台帳作成を支援する「ゲンバフォトAI」と、現地調査の記録作成を支援する「ゲンチョウAI」により、建設現場の記録業務を効率化。2026年度中に16種以上のエージェント展開を計画。",
+          "sourceUrl": "https://prtimes.jp/main/html/rd/p/000000082.000012493.html"
+        },
+        {
+          "category": "製品・サービス",
+          "title": "サイバーコム、AIアシスタント「ChatTAKUMI」にGemini特化の「Google Cloud版」を追加",
+          "summary": "9月1日提供開始。PowerPoint・音声/動画ファイルの直接読込対応や、Geminiの強みを活かした高品質・低レイテンシな画像生成機能、個社別最適化の画像認識連携機能を新搭載。自社クラウド環境に構築し機密情報漏洩リスクを抑える。",
+          "sourceUrl": "https://prtimes.jp/main/html/rd/p/000000034.000151917.html"
+        }
+      ],
+      "researchedAt": "2026-09-05 09:15"
     }
   ]
 }
