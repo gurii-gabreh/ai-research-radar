@@ -444,6 +444,30 @@
         }
       ],
       "researchedAt": "2026-09-05 09:15"
+    },
+    {
+      "keyword": "生成AI エージェント 最新動向",
+      "items": [
+        {
+          "category": "セキュリティ・規制",
+          "title": "Anthropic、規制業界向け「Enterprise Frontier Safeguards(EFS)」を発表",
+          "summary": "9月1日発表。ゼロデータ保持と自動不正利用検知を両立し、活動ログを顧客管理のクラウド上に保存する仕組み。Goldman SachsやMorgan Stanley等100社超と共同開発、2026年秋以降に段階展開予定。",
+          "sourceUrl": "https://www.helpnetsecurity.com/2026/09/02/anthropic-enterprise-frontier-safeguards/"
+        },
+        {
+          "category": "研究支援",
+          "title": "Anthropic、科学研究者向けに「Claude Team plan for scientists」を発表、1万席を無償・割引提供",
+          "summary": "8月27日発表。標準席は無償、5倍の利用上限を持つプレミアム席は月15ドル(1年間固定)。大学・非営利研究機関のPI等が対象で、生物・化学分野はOpusクラスモデルに限定するなどデュアルユースリスクに配慮。",
+          "sourceUrl": "https://www.unite.ai/anthropic-opens-10000-free-and-discounted-claude-seats-for-scientists/"
+        },
+        {
+          "category": "資金調達",
+          "title": "アムステルダム発Conversed.ai、エージェントAI運用基盤の欧州展開へ成長資金調達",
+          "summary": "AIエージェントのライフサイクル管理と、チャット・音声・メール・CRM/ERP等への本番統合を担う「AI Agent Optimization Studio」を提供。オランダの投資家から調達し、規制業界向け営業体制の強化に充てる。",
+          "sourceUrl": "https://dealroom.co/news/146852-dutch-investors-back-conversed-ais-push-into-regulated-ai-markets/"
+        }
+      ],
+      "researchedAt": "2026-09-06 09:15"
     }
   ]
 }
