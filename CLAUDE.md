@@ -64,6 +64,7 @@
 24. 実装を行った際は、その実装箇所と経緯(何を・なぜ実装したか)を、progress-tracker-dashboardのtasks.json/concept-log.jsonへの記録とは別に、**実装した対象リポジトリ自身の中にも**履歴として残すこと(コミットメッセージへの具体的な記載、または該当箇所への注記等)。実装した本人以外が後からそのリポジトリだけを見ても経緯を追えるようにする(2026-09-12追加、ユーザー指摘)。
 25. 実装を行った際は、コミット・pushで終わらせず、必ずマージ(作業ブランチからmainへの反映)まで完了させること。ユーザーに改めて「マージしろ」と指示させないこと。作業ブランチでの実装自体が既にユーザーの了承を得たものであれば、マージはその作業を完了させる一部として扱い、別途マージの可否を確認し直す必要はない(2026-09-12追加、ユーザー指摘)。
 26. servicenow-sub-agentリポジトリ(ServiceNow PDI向けAI研究自動収集パイプライン)の`data/research-items.json`には、AI/開発関連の調査結果が自動収集・一部人手でキュレーションされて蓄積されている(2026-09-17追加、ユーザー指示)。「servicenow sub agentの調査結果/ナレッジを見て」等と言われた場合は、記憶だけで答えず、実際にこのファイルを確認してから回答すること。具体的な手順はservicenow-sub-agentリポジトリのresearch-knowledge-lookupスキル(`.claude/skills/research-knowledge-lookup/`)を使う。
+27. チャット文言で呼び出す固定の起動フレーズを持つスキル(例: room-task-audit「【ルームタスク抽出】...」、research-knowledge-lookup「servicenow sub agentの調査結果を見て」)を新規作成・変更した場合は、その起動フレーズをclaude-voice-bridgeリポジトリの`data/templates.json`にも`"type": "skill"`付きで追記し、commit・pushすること(2026-09-19追加、ユーザー指示「スキル化したらjsonデータにまとめろ、それをもとにサイドアプリのスキル化文部分に反映させろ」)。claude-voice-bridgeサイドパネルの「📥 JSONから一覧を読み込む」ボタンがこのJSONを読み込んで「🔧 スキル呼び出し文言」の折りたたみに反映する仕組みのため、追記を怠ると新しいスキルがサイドパネルのボタンに反映されない。起動フレーズを持たないスキル(裏側の手順のみのもの)は対象外。
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
