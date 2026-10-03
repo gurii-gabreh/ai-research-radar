@@ -9,6 +9,7 @@
 - **manager-room(状況把握・優先度判断・振り分けのみ)とworker-room(実装担当)の役割分担がある。このセッションで実装作業をしているなら、それはworker-room役**
 - 実装したタスクの`detail`(実装ナレッジ)・`note`・`checkHistory`を、progress-tracker-dashboardの`data/tasks.json`側で空欄のまま完了させない
 - 意味のある実装判断(設計パターン・DB設計・セキュリティ対応・AI/LLM関連・テスト方針など)があれば、progress-tracker-dashboardの`data/concept-log.json`にも記録する(2026-08-13、自動同期の書き込み権限確認のための軽微な更新)
+- **新規セッション・他のルームへ引き継ぐ際は、progress-tracker-dashboardの`data/manager-room-log.json`を必ず確認すること**。マネージャールーム(CCRセッション)の日々の経緯(相談・決定事項・完了作業・未解決事項を問わず)が時系列で記録されている、引き継ぎ用の正本(2026-10-03追加、ユーザー指示「他のルームに引き継ぐ際は、この記録したJSONをもとに引き継げるようにしろ、これにより今までやってきた内容を継承させろ」)。詳細はルール28参照。
 
 ## より詳しいルール(下記URLを実際にWebFetch等で取得すること。リンクを貼るだけでは中身は読み込まれない)
 
@@ -66,6 +67,10 @@
 25. 実装を行った際は、コミット・pushで終わらせず、必ずマージ(作業ブランチからmainへの反映)まで完了させること。ユーザーに改めて「マージしろ」と指示させないこと。作業ブランチでの実装自体が既にユーザーの了承を得たものであれば、マージはその作業を完了させる一部として扱い、別途マージの可否を確認し直す必要はない(2026-09-12追加、ユーザー指摘)。
 26. servicenow-sub-agentリポジトリ(ServiceNow PDI向けAI研究自動収集パイプライン)の`data/research-items.json`には、AI/開発関連の調査結果が自動収集・一部人手でキュレーションされて蓄積されている(2026-09-17追加、ユーザー指示)。「servicenow sub agentの調査結果/ナレッジを見て」等と言われた場合は、記憶だけで答えず、実際にこのファイルを確認してから回答すること。具体的な手順はservicenow-sub-agentリポジトリのresearch-knowledge-lookupスキル(`.claude/skills/research-knowledge-lookup/`)を使う。
 27. チャット文言で呼び出す固定の起動フレーズを持つスキル(例: room-task-audit「【ルームタスク抽出】...」、research-knowledge-lookup「servicenow sub agentの調査結果を見て」)を新規作成・変更した場合は、その起動フレーズをclaude-voice-bridgeリポジトリの`data/templates.json`にも`"type": "skill"`付きで追記し、commit・pushすること(2026-09-19追加、ユーザー指示「スキル化したらjsonデータにまとめろ、それをもとにサイドアプリのスキル化文部分に反映させろ」)。claude-voice-bridgeサイドパネルの「📥 JSONから一覧を読み込む」ボタンがこのJSONを読み込んで「🔧 スキル呼び出し文言」の折りたたみに反映する仕組みのため、追記を怠ると新しいスキルがサイドパネルのボタンに反映されない。起動フレーズを持たないスキル(裏側の手順のみのもの)は対象外。
+28. マネージャールーム(CCRセッション、claude-voice-bridgeのブラウザ拡張機能を介さないルーム)の会話内容は、以下の2系統でJSON化される(2026-10-03追加、ユーザー指示「このルームの内容をJSONに記録しろ、別のルームに行ってもこのJSONを見れば過去のすべてを辿れるようにしろ」)。
+    - **`data/manager-room-log.json`**: 毎日JST 0:00に、このセッション(session_019rBhvzqA7o5g8MjBA6dyCg)へ自己発火するRoutine(trig_01KWsnPeW7QcgTBKjUZYnDZV)が、前日分の会話を**未解決・解決済み問わず全体**(相談・決定事項・完了作業・未解決事項)を時系列で要約し`entries`配列へ追記する。**新規セッション・他のルームへ引き継ぐ際は、まずこのファイルを読んで経緯を把握すること**。休止中(IDLE)の別セッションに記録させたい場合は、ルール19の手順(create_trigger→fire_trigger→delete_trigger)で依頼を配信する。
+    - **`data/tasks.json`/`data/concept-log.json`**: 従来どおり、タスク単位・概念単位の構造化記録(ルール3・4参照)。manager-room-log.jsonとは役割分担であり、二重管理(同じ内容が両方に書かれること)は許容する。
+    - claude-voice-bridgeの`room-log.json`方式(週次、ブラウザ拡張機能が有効なタブ限定)はこのマネージャールームの対象外(2026-09-19確認済み、ai-config.jsonのroomHistoryCapture参照)であり、上記2系統とは別物。
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
