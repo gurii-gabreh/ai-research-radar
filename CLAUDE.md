@@ -9,6 +9,7 @@
 - **manager-room(状況把握・優先度判断・振り分けのみ)とworker-room(実装担当)の役割分担がある。このセッションで実装作業をしているなら、それはworker-room役**
 - 実装したタスクの`detail`(実装ナレッジ)・`note`・`checkHistory`を、progress-tracker-dashboardの`data/tasks.json`側で空欄のまま完了させない
 - 意味のある実装判断(設計パターン・DB設計・セキュリティ対応・AI/LLM関連・テスト方針など)があれば、progress-tracker-dashboardの`data/concept-log.json`にも記録する(2026-08-13、自動同期の書き込み権限確認のための軽微な更新)
+- タスクを完了させたら、progress-tracker-dashboardの`data/credit-log.json`の`entries`へdate/repo/task/noteを1行追記する(可能ならtime/usage/rateLimitResetsAtも)。この運用ルールは元々`credit-log.json`自身の`description`とdashboard.htmlの説明文にしか書かれておらず、CLAUDE.mdに無かったため2026-08-20〜2026-10-03の約1ヶ月半、記録が完全に止まっていた(2026-10-03、ユーザー指摘により発覚・遡及backfill実施。再発防止のためここに明記)。
 - **新規セッション・他のルームへ引き継ぐ際は、progress-tracker-dashboardの`data/manager-room-log.json`を必ず確認すること**。マネージャールーム(CCRセッション)の日々の経緯(相談・決定事項・完了作業・未解決事項を問わず)が時系列で記録されている、引き継ぎ用の正本(2026-10-03追加、ユーザー指示「他のルームに引き継ぐ際は、この記録したJSONをもとに引き継げるようにしろ、これにより今までやってきた内容を継承させろ」)。詳細はルール28参照。
 
 ## より詳しいルール(下記URLを実際にWebFetch等で取得すること。リンクを貼るだけでは中身は読み込まれない)
@@ -72,6 +73,7 @@
     - **`data/manager-room-log.json`**: 毎日JST 0:00に、このセッション(session_019rBhvzqA7o5g8MjBA6dyCg)へ自己発火するRoutine(trig_01KWsnPeW7QcgTBKjUZYnDZV)が、前日分の会話を**未解決・解決済み問わず全体**(相談・決定事項・完了作業・未解決事項)を時系列で要約し`entries`配列へ追記する。**新規セッション・他のルームへ引き継ぐ際は、まずこのファイルを読んで経緯を把握すること**。休止中(IDLE)の別セッションに記録させたい場合は、ルール19の手順(create_trigger→fire_trigger→delete_trigger)で依頼を配信する。
     - **`data/tasks.json`/`data/concept-log.json`**: 従来どおり、タスク単位・概念単位の構造化記録(ルール3・4参照)。manager-room-log.jsonとは役割分担であり、二重管理(同じ内容が両方に書かれること)は許容する。
     - claude-voice-bridgeの`room-log.json`方式(週次、ブラウザ拡張機能が有効なタブ限定)はこのマネージャールームの対象外(2026-09-19確認済み、ai-config.jsonのroomHistoryCapture参照)であり、上記2系統とは別物。
+    - 【2026-10-03追記・記録漏れの再発防止】毎日JST 0:00のRoutine(trig_01KWsnPeW7QcgTBKjUZYnDZV)は、このルームの会話要約に加えて、`data/tasks.json`内で`status`が`完了`なのに`detail`が空欄のままのタスクが無いか、`data/credit-log.json`の最終記録日以降に完了したタスクが未反映のまま残っていないかを毎回チェックし、見つかった場合はその場で埋める(経緯: 2026-08-31追加のdetail必須ルールにも関わらず完了タスク9件が空欄のまま放置され、credit-log.jsonも約1ヶ月半記録が止まっていたことが2026-10-03にユーザー指摘で発覚したため)。
 <!-- CORE-RULES:END -->
 
 このリポジトリは共有Routineの直接管理対象**外**(progress-tracker-dashboardのREADME「AI調査(Gemini)の別系統について」参照)。上記ブロックは`gurii-gabreh/progress-tracker-dashboard`の`data/claude-core-rules.md`が正本で、GitHub Actionsが自動同期する。直接編集しても次回同期で上書きされる。
